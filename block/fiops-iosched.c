@@ -501,7 +501,11 @@ static void fiops_insert_request(struct request_queue *q, struct request *rq)
 static inline void fiops_schedule_dispatch(struct fiops_data *fiopsd)
 {
 	if (fiopsd->busy_queues)
+<<<<<<< HEAD
 		kblockd_schedule_work(&fiopsd->unplug_work);
+=======
+		kblockd_schedule_work(fiopsd->queue, &fiopsd->unplug_work);
+>>>>>>> 8387bc6e1f68... Add FIOPS i/o scheduler
 }
 
 static void fiops_completed_request(struct request_queue *q, struct request *rq)
@@ -528,7 +532,11 @@ fiops_find_rq_fmerge(struct fiops_data *fiopsd, struct bio *bio)
 	cic = fiops_cic_lookup(fiopsd, tsk->io_context);
 
 	if (cic) {
+<<<<<<< HEAD
 		sector_t sector = bio->bi_iter.bi_sector + bio_sectors(bio);
+=======
+		sector_t sector = bio->bi_sector + bio_sectors(bio);
+>>>>>>> 8387bc6e1f68... Add FIOPS i/o scheduler
 
 		return elv_rb_find(&cic->sort_list, sector);
 	}
@@ -762,3 +770,7 @@ module_exit(fiops_exit);
 MODULE_AUTHOR("Jens Axboe, Shaohua Li <shli@kernel.org>");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("IOPS based IO scheduler");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8387bc6e1f68... Add FIOPS i/o scheduler

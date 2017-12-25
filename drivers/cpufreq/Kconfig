@@ -189,6 +189,13 @@ config CPU_FREQ_GOV_INTERACTIVE
 	  increases so that the system is more responsive to
 	  interactive workloads.
 
+	  For details, take a look at linux/Documentation/cpu-freq.
+
+	  If in doubt, say N.
+config CPU_FREQ_GOV_ALUCARD
+        tristate "'alucard' cpufreq governor"
+        depends on CPU_FREQ
+
 	  To compile this driver as a module, choose M here: the
 	  module will be called cpufreq_interactive.
 

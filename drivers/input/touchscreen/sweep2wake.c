@@ -30,10 +30,6 @@
 #include <linux/workqueue.h>
 #include <linux/input.h>
 #include <linux/hrtimer.h>
-<<<<<<< HEAD
-#include <linux/display_state.h>
-=======
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 
 /* uncomment since no touchscreen defines android touch, do that here */
 //#define ANDROID_TOUCH_DECLARED
@@ -84,14 +80,9 @@ MODULE_LICENSE("GPLv2");
 
 /* Resources */
 int s2w_switch = 0;
-<<<<<<< HEAD
-static int s2w_debug = 0;
-static int s2w_pwrkey_dur = 30;
-=======
 bool s2w_scr_suspended = false;
 static int s2w_debug = 0;
 static int s2w_pwrkey_dur = 60;
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 static int touch_x = 0, touch_y = 0;
 static bool touch_x_called = false, touch_y_called = false;
 static bool exec_count = true;
@@ -158,11 +149,7 @@ static void detect_sweep2wake(int x, int y)
 		pr_info(LOGTAG"x: %d, y: %d\n", x, y);
 
 	//left->right
-<<<<<<< HEAD
-	if (!is_display_on()) {
-=======
 	if (s2w_scr_suspended == true) {
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 		prevx = 0;
 		nextx = S2W_X_B1;
 		if ((barrier[0] == true) ||
@@ -191,11 +178,7 @@ static void detect_sweep2wake(int x, int y)
 			}
 		}
 	//right->left
-<<<<<<< HEAD
-	} else if ((is_display_on()) && (s2w_switch > 0)) {
-=======
 	} else if ((s2w_scr_suspended == false) && (s2w_switch > 0)) {
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 		scr_on_touch=true;
 		prevx = (S2W_X_MAX - S2W_X_FINAL);
 		nextx = S2W_X_B2;
@@ -238,11 +221,7 @@ static void s2w_input_callback(struct work_struct *unused) {
 static void s2w_input_event(struct input_handle *handle, unsigned int type,
 				unsigned int code, int value)
 {
-<<<<<<< HEAD
-	if ((!s2w_switch) || ((is_display_on()) && (s2w_switch > 1)))
-=======
 	if ((!s2w_switch) || ((s2w_scr_suspended) && (s2w_switch > 1)))
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 		return;
 
 	if (code == ABS_MT_SLOT) {
@@ -268,22 +247,13 @@ static void s2w_input_event(struct input_handle *handle, unsigned int type,
 	if (touch_x_called && touch_y_called) {
 		touch_x_called = false;
 		touch_y_called = false;
-<<<<<<< HEAD
-		queue_work(s2w_input_wq, &s2w_input_work);
-=======
 		queue_work_on(0, s2w_input_wq, &s2w_input_work);
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 	}
 }
 
 static int input_dev_filter(struct input_dev *dev) {
 	if (strstr(dev->name, "touch") ||
-<<<<<<< HEAD
-		strstr(dev->name, "synaptics_dsx_i2c") ||
-		strstr(dev->name, "ft5x06_720p")) {
-=======
 		strstr(dev->name, "synaptics_dsx_i2c")) {
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 		return 0;
 	} else {
 		return 1;
@@ -457,17 +427,10 @@ static int __init sweep2wake_init(void)
 		goto err_input_dev;
 	}
 
-<<<<<<< HEAD
-	s2w_input_wq = alloc_workqueue("s2wiwq", WQ_HIGHPRI | WQ_UNBOUND, 0);
-	if (!s2w_input_wq) {
-		pr_err("%s: Failed to create s2wiwq workqueue\n", __func__);
-		return -ENOMEM;
-=======
 	s2w_input_wq = create_workqueue("s2wiwq");
 	if (!s2w_input_wq) {
 		pr_err("%s: Failed to create s2wiwq workqueue\n", __func__);
 		return -EFAULT;
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 	}
 	INIT_WORK(&s2w_input_work, s2w_input_callback);
 	rc = input_register_handler(&s2w_input_handler);
@@ -517,9 +480,5 @@ static void __exit sweep2wake_exit(void)
 	return;
 }
 
-<<<<<<< HEAD
 module_init(sweep2wake_init);
-=======
-late_initcall(sweep2wake_init);
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 module_exit(sweep2wake_exit);

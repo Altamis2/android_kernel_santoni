@@ -36,14 +36,11 @@
 
 #include <linux/hardware_info.h>
 
-#if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#if (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 #include <linux/input/doubletap2wake.h>
-#else if defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE))
 #include <linux/input/sweep2wake.h>
-#else if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 #include <linux/input/doubletap2wake.h>
 #include <linux/input/sweep2wake.h>
 #endif
@@ -825,27 +822,21 @@ static int fb_notifier_callback(struct notifier_block *self,
 			ft5x06_data && ft5x06_data->client) {
 		blank = evdata->data;
 		if (*blank == FB_BLANK_UNBLANK) {
-#if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#if (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 			dt2w_scr_suspended = false;
-#else if defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE))
 			s2w_scr_suspended = false;
-#else if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 			dt2w_scr_suspended = false;
 			s2w_scr_suspended = false;
 #endif
 			schedule_work(&ft5x06_data->fb_notify_work);
 		} else if (*blank == FB_BLANK_POWERDOWN) {
-#if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#if (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && !defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 		dt2w_scr_suspended = true;
-#else if defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && \
-	 !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE) && !defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE))
 		s2w_scr_suspended = true;
-#else if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && \
-	 defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
+#elif (defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE) && defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE))
 		dt2w_scr_suspended = true;
 		s2w_scr_suspended = true;
 #endif

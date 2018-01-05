@@ -23,9 +23,4 @@
 
 extern int dt2w_switch;
 
-<<<<<<< HEAD
-=======
-extern bool dt2w_scr_suspended;
-
->>>>>>> 67b0acaa95eb... input: add dt2w/s2w support.
 #endif	/* _LINUX_DOUBLETAP2WAKE_H */

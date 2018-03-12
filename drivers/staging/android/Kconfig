@@ -144,6 +144,12 @@ config ANDROID_WHETSTONE
 	---help---
 	  report to whetstone the memory state when reach target limit value.
 
+config ANDROID_WHETSTONE
+	bool "Android Whetstone"
+	default N
+	---help---
+	  report to whetstone the memory state when reach target limit value.
+
 source "drivers/staging/android/ion/Kconfig"
 
 source "drivers/staging/android/fiq_debugger/Kconfig"

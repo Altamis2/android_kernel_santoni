@@ -643,7 +643,10 @@ KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)
 KBUILD_CFLAGS	+= $(call cc-option,-fdata-sections,)
 endif
 
-ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+ifneq ($(KBUILD_LOUP_CFLAGS),)
+$(info Using custom flags!!! [${KBUILD_LOUP_CFLAGS}])
+KBUILD_CFLAGS   += $(KBUILD_LOUP_CFLAGS) $(call cc-disable-warning,maybe-uninitialized,)
+else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
 ifdef CONFIG_PROFILE_ALL_BRANCHES

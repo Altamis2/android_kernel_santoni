@@ -31,7 +31,10 @@
 
 #ifdef CONFIG_SCHED_HMP
 #define DRIVER_VERSION                5
+<<<<<<< HEAD
 #define DRIVER_SUBVER		      0
+=======
+>>>>>>> 8461ba08b6bb... :sparkles: hotplug: Added Thunderplug hotplug
 #else
 #define DRIVER_VERSION                3
 #define DRIVER_SUBVER                 0

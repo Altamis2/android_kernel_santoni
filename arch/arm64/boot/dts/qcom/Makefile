@@ -400,6 +400,8 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 	sda429-mtp.dtb \
 	sda429-cdp.dtb
 
+dtb-y += msm8940-pmi8950-qrd-sku7_S88536AA2.dtb
+
 endif
 
 always		:= $(dtb-y)

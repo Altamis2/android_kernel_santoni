@@ -18,7 +18,7 @@ export LOUP_WORKING_DIR=$(dirname "$(pwd)")
 # Menuconfig configuration
 # ================
 # DEFCONFIG: Name of the kernel configuration file to be used by menuconfig.
-DEFCONFIG="msm8953_defconfig"
+DEFCONFIG="msm8937_defconfig"
 
 # If -no-menuconfig flag is present we will skip the kernel configuration step.
 # Make operation will use santoni_defconfig directly.

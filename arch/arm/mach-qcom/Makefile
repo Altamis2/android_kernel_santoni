@@ -3,6 +3,7 @@ obj-$(CONFIG_SMP)	+= platsmp.o
 obj-$(CONFIG_ARCH_SDXPOORWILLS) += board-poorwills.o
 obj-$(CONFIG_ARCH_MSM8953) += board-msm8953.o
 obj-$(CONFIG_ARCH_MSM8937) += board-msm8937.o
+obj-$(CONFIG_ARCH_MSM8940) += board-msm8940.o
 obj-$(CONFIG_ARCH_MSM8909) += board-msm8909.o
 obj-$(CONFIG_ARCH_SDM429) += board-sdm429.o
 obj-$(CONFIG_ARCH_SDM439) += board-sdm439.o

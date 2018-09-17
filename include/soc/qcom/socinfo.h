@@ -110,6 +110,8 @@
 	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,msm8953")
 #define early_machine_is_msm8937()	\
 	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,msm8937")
+#define early_machine_is_msm8940()      \
+        of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,msm8940")
 #define early_machine_is_sdm450()	\
 	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,sdm450")
 #define early_machine_is_sdm632()	\
@@ -145,6 +147,7 @@
 #define early_machine_is_msm8610()	0
 #define early_machine_is_msm8909()	0
 #define early_machine_is_msm8916()	0
+#define early_machine_is_msm8940()      
 #define early_machine_is_msm8936()	0
 #define early_machine_is_msm8939()	0
 #define early_machine_is_apq8084()	0
@@ -212,6 +215,7 @@ enum msm_cpu {
 	MSM_CPU_9625,
 	MSM_CPU_8909,
 	MSM_CPU_8916,
+	MSM_CPU_8940,
 	MSM_CPU_8936,
 	MSM_CPU_8939,
 	MSM_CPU_8226,

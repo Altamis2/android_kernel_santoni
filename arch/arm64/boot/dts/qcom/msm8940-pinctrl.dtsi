@@ -17,6 +17,7 @@
 	pinctrl@1000000 {
 		/delete-node/ spi7;
 		/delete-node/ nfc;
+		/delete-node/ cdc_mclk2_pin;
 
 		cam_sensor_rear_default: cam_sensor_rear_default {
 			/* RESET, STANDBY */

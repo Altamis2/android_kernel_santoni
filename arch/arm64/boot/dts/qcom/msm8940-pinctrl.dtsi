@@ -19,6 +19,9 @@
 		/delete-node/ nfc;
 		/delete-node/ cdc_mclk2_pin;
 
+		/delete-node/ cam_sensor_rear_vana;
+		/delete-node/ cam_sensor_rear_vana_sleep;
+
 		cam_sensor_rear_default: cam_sensor_rear_default {
 			/* RESET, STANDBY */
 			mux {

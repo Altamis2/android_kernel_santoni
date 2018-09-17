@@ -201,33 +201,12 @@ static int qpnp_revid_probe(struct platform_device *pdev)
 		pmic_status = 0;
 
 	/* special case for PMI8937 */
-	//if (pmic_subtype == PMI8950_PERIPHERAL_SUBTYPE) {
-	//	/* read spare register */
-	//	spare0 = qpnp_read_byte(regmap, base + REVID_SPARE_0);
-	//	if (spare0)
-	//		pmic_subtype = PMI8937_PERIPHERAL_SUBTYPE;
-	//}
-
-	/* bitrvmpd: Old way */
-	/* special case for PMI8937/PMI8940 */
-        if (pmic_subtype == PMI8950_PERIPHERAL_SUBTYPE) {
-                /* read spare register */
-                spare0 = qpnp_read_byte(spmi, resource->start + REVID_SPARE_0);
-                switch (spare0) {
-                case 0:
-                        pmic_subtype = PMI8950_PERIPHERAL_SUBTYPE;
-                        break;
-                case PMI8937_PERIPHERAL_SUBTYPE:
-                        pmic_subtype = PMI8937_PERIPHERAL_SUBTYPE;
-                        break;
-                case PMI8940_PERIPHERAL_SUBTYPE:
-                        pmic_subtype = PMI8940_PERIPHERAL_SUBTYPE;
-                        break;
-                default:
-                        pr_warn("Invalid spare0 value=%x\n", spare0);
-                }
-        }
-
+	if (pmic_subtype == PMI8950_PERIPHERAL_SUBTYPE) {
+		/* read spare register */
+		spare0 = qpnp_read_byte(regmap, base + REVID_SPARE_0);
+		if (spare0)
+			pmic_subtype = PMI8937_PERIPHERAL_SUBTYPE;
+	}
 
 	if (of_property_read_bool(pdev->dev.of_node, "qcom,fab-id-valid"))
 		fab_id = qpnp_read_byte(regmap, base + REVID_FAB_ID);

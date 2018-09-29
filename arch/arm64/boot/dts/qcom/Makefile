@@ -1,3 +1,4 @@
+ifeq ($(CONFIG_ARCH_MSM8940),)
 dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb msm8916-mtp.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
@@ -399,9 +400,10 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 	sdm429-qrd.dtb \
 	sda429-mtp.dtb \
 	sda429-cdp.dtb
+endif
 
+else
 dtb-$(CONFIG_ARCH_MSM8940) += msm8940-pmi8950-qrd-sku7_S88536AA2.dtb
-
 endif
 
 always		:= $(dtb-y)

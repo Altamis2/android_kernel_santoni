@@ -109,3 +109,195 @@
 		};
 	};
 };
+
+
+/* 
+ * =========================================
+ * ==== DTS refactor v2 | msm8937.dtsi =====
+ * =========================================
+ */
+
+// Reserved-memory regions
+&other_ext_mem{
+	reg = <0x0 0x84A00000 0x0 0x1E00000>;
+};
+&modem_mem{
+	reg = <0x0 0x86800000 0x0 0x6a00000>;
+};
+&adsp_fw_mem{
+	reg = <0x0 0x8d200000 0x0 0x1100000>;
+};
+&wcnss_fw_mem{
+	reg = <0x0 0x8e300000 0x0 0x700000>;
+};
+
+// i2c_3 mods
+&i2c_3{
+	qcom,clk-freq-out = <100000>;
+	status= "ok";
+};
+
+// wlan changes
+&soc{
+	qcom,wcnss-wlan@0a000000{
+		clocks = <&clock_gcc clk_xo_wlan_clk>,
+			 <&clock_gcc clk_rf_clk2>,
+			 <&clock_debug clk_gcc_debug_mux_8937>,
+			 <&clock_gcc clk_wcnss_m_clk>;
+			 //<&clock_gcc clk_snoc_wcnss_a_clk>;
+		clock-names = "xo", "rf_clk", "measure", "wcnss_debug";
+				//"snoc_wcnss";
+		/delete-property/ qcom,snoc-wcnss-clock-freq;
+	};
+	
+};
+
+// usb otg
+&usb_otg{
+	qcom,usbin-vadc = <&pmi8950_vadc>;
+};
+
+// qcom seecom
+&qcom_seecom{
+	reg = <0x84A00000 0x1900000>;
+};
+
+// msm8937-regulator.dtsi
+&pm8937_l6{
+	regulator-always-on;
+};
+
+&pm8937_s5{
+	qcom,mode = "pwm";
+};
+
+&apc_vreg_corner{
+	qcom,cpr-voltage-floor =   <1150000 1150000 1250000>;
+	/delete-property/ qcom,cpr-enable;
+};
+
+//pm8937.dtsi
+&spmi_bus {
+        qcom,pm8937@0 {
+                qcom,power-on@800 {
+                        qcom,pon_1 {
+				qcom,support-reset = <1>;
+				qcom,s1-timer = <4480>;
+				qcom,s2-timer = <2000>;
+				qcom,s2-type = <7>;
+                        };
+		};
+	};
+};
+
+&soc{
+	qcom,cpp@1b04000 {
+		clocks = /*<&clock_gcc clk_gcc_camss_ispif_ahb_clk>,*/			
+			<&clock_gcc clk_gcc_camss_top_ahb_clk>,
+			<&clock_gcc clk_cpp_clk_src>,
+			<&clock_gcc clk_gcc_camss_cpp_ahb_clk>,
+			<&clock_gcc clk_gcc_camss_cpp_axi_clk>,
+			<&clock_gcc clk_gcc_camss_cpp_clk>,
+			<&clock_gcc clk_gcc_camss_micro_ahb_clk>,
+			<&clock_gcc clk_gcc_camss_ahb_clk>;
+		clock-names = /*"ispif_ahb_clk",*/ 
+			"camss_top_ahb_clk", "cpp_core_clk", "camss_vfe_cpp_ahb_clk",
+			"camss_vfe_cpp_axi_clk", "camss_vfe_cpp_clk",
+			"micro_iface_clk", "camss_ahb_clk";
+		qcom,clock-rates = <0 180000000 0 0 180000000 0 0>;
+	};
+};
+
+//msm8937-audio.dtsi
+&int_codec{
+	status = "okay";
+	qcom,model = "msm8920-sku7-snd-card";
+	qcom,msm-mbhc-hphl-swh = <1>;
+	qcom,msm-hs-micbias-type = "internal";
+	ext-spk-amp-gpio = <&tlmm 124 0>;
+	headset-gpio = <&tlmm 129 0>;
+	qcom,audio-routing =
+			 "RX_BIAS", "MCLK", 
+			 "SPK_RX_BIAS", "MCLK", 
+			 "INT_LDO_H", "MCLK", 
+			 "MIC BIAS External", 
+			 "Handset Mic", "MIC BIAS Internal2", 
+			 "Headset Mic", "MIC BIAS External", 
+			 "Secondary Mic", "AMIC1", 
+			 "MIC BIAS External", "AMIC2", 
+			 "MIC BIAS Internal2", 
+			 "AMIC3", "MIC BIAS External";
+	asoc-platform-names = "msm-pcm-dsp.0", "msm-pcm-dsp.1", 
+			"msm-pcm-dsp.2", "msm-voip-dsp", 
+			"msm-pcm-voice", "msm-pcm-loopback", 
+			"msm-compress-dsp", "msm-pcm-hostless", 
+			"msm-pcm-afe", "msm-lsm-client", 
+			"msm-pcm-routing", "msm-pcm-lpa";
+	asoc-cpu-names = "msm-dai-q6-auxpcm.1", 
+			"msm-dai-q6-mi2s.0", "msm-dai-q6-mi2s.1", 
+			"msm-dai-q6-mi2s.2", "msm-dai-q6-mi2s.3", 
+			"msm-dai-q6-mi2s.5", "msm-dai-q6-mi2s.6", 
+			"msm-dai-q6-dev.16384", "msm-dai-q6-dev.16385", 
+			"msm-dai-q6-dev.16386", "msm-dai-q6-dev.16387", 
+			"msm-dai-q6-dev.16390", "msm-dai-q6-dev.16391", 
+			"msm-dai-q6-dev.16392", "msm-dai-q6-dev.16393", 
+			"msm-dai-q6-dev.12288", "msm-dai-q6-dev.12289", 
+			"msm-dai-q6-dev.12292", "msm-dai-q6-dev.12293", 
+			"msm-dai-q6-dev.224", "msm-dai-q6-dev.225", 
+			"msm-dai-q6-dev.241", "msm-dai-q6-dev.240", 
+			"msm-dai-q6-dev.32771", "msm-dai-q6-dev.32772", 
+			"msm-dai-q6-dev.32773", "msm-dai-q6-dev.32770";
+	qcom,cdc-us-euro-gpios;
+	/delete-property/ asoc-codec;
+	/delete-property/ asoc-codec-names;
+};
+&soc{
+	i2c@78b6000 {
+		aw87319: aw87319@58 {
+			compatible = "awinic,aw87319_pa";
+			reg = <0x58>;
+			qcom,ext_pa_spk_aw87319_rst = <0xa7 0x7c 0x0>;
+		};
+	};
+};
+
+//pmi8950.dtsi
+&pmi8950_torch0{
+        qcom,current = <100>;
+};
+
+&pmi8950_torch1{
+	qcom,current = <100>;
+};
+
+&wled{
+	qcom,en-cabc;
+};
+
+&flash_led{
+	pmi8950_torch2: qcom,torch_2 {
+		label = "torch";
+		qcom,led-name = "flashlight";
+		qcom,default-led-trigger = 
+				"torch2_trigger";
+		qcom,max-current = <200>;
+		qcom,id = <1>;
+		qcom,current = <100>;
+	};
+};
+
+&pmi_haptic{
+	qcom,vmax-mv = <2700>;
+	/delete-property/ qcom,en-brake;
+};
+
+//dsi-panel-sim-video.dtsi
+&dsi_sim_vid {
+	qcom,mdss-dsi-display-timings {
+        	timing@0{
+                	qcom,mdss-dsi-h-front-porch = <6>;
+                        qcom,mdss-dsi-h-back-porch = <6>;
+                        qcom,mdss-dsi-h-pulse-width = <2>;
+		};
+	};
+};

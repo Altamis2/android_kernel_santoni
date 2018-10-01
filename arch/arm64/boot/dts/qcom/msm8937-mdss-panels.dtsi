@@ -22,6 +22,12 @@
 #include "dsi-panel-hx8399c-hd-plus-video.dtsi"
 #include "dsi-panel-nt35695b-truly-fhd-video.dtsi"
 #include "dsi-panel-nt35695b-truly-fhd-cmd.dtsi"
+
+//TODO: fix
+#include "dsi-panel-hx8394f-boe-720p-video.dtsi"
+#include "dsi-panel-ili9881c-ebbg-720p-video.dtsi"
+#include "dsi-panel-ili9881c-ebbgDJN-720p-video.dtsi"
+
 &soc {
 	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
 		#address-cells = <1>;

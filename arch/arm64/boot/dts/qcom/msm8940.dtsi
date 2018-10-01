@@ -748,3 +748,11 @@
 	};
 };
 
+/* Unused stuff */
+&soc{
+	/delete-node/ sound-9335;
+	/delete-node/ audio_ext_clk;
+};
+&slim_msm {
+	/delete-node/ tasha_codec;
+};

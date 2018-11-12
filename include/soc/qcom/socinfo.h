@@ -147,7 +147,6 @@
 #define early_machine_is_msm8610()	0
 #define early_machine_is_msm8909()	0
 #define early_machine_is_msm8916()	0
-#define early_machine_is_msm8940()      
 #define early_machine_is_msm8936()	0
 #define early_machine_is_msm8939()	0
 #define early_machine_is_apq8084()	0
@@ -156,7 +155,7 @@
 #define early_machine_is_fsm9010()	0
 #define early_machine_is_msmtellurium()	0
 #define early_machine_is_msm8996()	0
-#define early_machine_is_msm8976() 0
+#define early_machine_is_msm8976()	0
 #define early_machine_is_msm8929()	0
 #define early_machine_is_msmcobalt()	0
 #define early_machine_is_apqcobalt()	0
@@ -169,6 +168,7 @@
 #define early_machine_is_sda670()	0
 #define early_machine_is_msm8953()	0
 #define early_machine_is_msm8937()	0
+#define early_machine_is_msm8940()      0
 #define early_machine_is_sdm450()	0
 #define early_machine_is_sdm632()	0
 #define early_machine_is_sdm439()	0
@@ -215,7 +215,6 @@ enum msm_cpu {
 	MSM_CPU_9625,
 	MSM_CPU_8909,
 	MSM_CPU_8916,
-	MSM_CPU_8940,
 	MSM_CPU_8936,
 	MSM_CPU_8939,
 	MSM_CPU_8226,
@@ -245,6 +244,7 @@ enum msm_cpu {
 	MSM_CPU_SDM632,
 	MSM_CPU_SDA632,
 	MSM_CPU_8937,
+	MSM_CPU_8940,
 	MSM_CPU_SDM439,
 	MSM_CPU_SDM429,
 	MSM_CPU_SDA439,

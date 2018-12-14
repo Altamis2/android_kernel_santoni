@@ -1,4 +1,7 @@
-        Linux kernel release 3.x <http://kernel.org/>
+BUILD STATUS      :  [![Build Status](https://semaphoreci.com/api/v1/quantummech2000/android_kernel_santoni/branches/rel-miui_3-6/badge.svg)](https://semaphoreci.com/quantummech2000/android_kernel_santoni) 
+
+
+         Linux kernel release 3.x <http://kernel.org/>
 
 These are the release notes for Linux version 3.  Read them carefully,
 as they tell you what this is all about, explain how to install the

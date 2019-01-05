@@ -33,7 +33,7 @@ fi
 
 export DEVICE=$1;
 if [[ -z ${DEVICE} ]]; then
-    export DEVICE="Santoni";
+    export DEVICE="HM4X";
 fi
 
 mkdir -p ${KERNELDIR}/aroma
@@ -68,7 +68,7 @@ export TCVERSION1="$(${CROSS_COMPILE}gcc --version | head -1 |\
 awk -F '(' '{print $2}' | awk '{print tolower($1)}')"
 export TCVERSION2="$(${CROSS_COMPILE}gcc --version | head -1 |\
 awk -F ')' '{print $2}' | awk '{print tolower($1)}')"
-export ZIPNAME="${KERNELNAME}-${DEVICE}-TREBLE-BUILD-$(date +%Y%m%d-%H%M).zip"
+export ZIPNAME="${KERNELNAME}-${DEVICE}-MIUI-BUILD-$(date +%Y%m%d-%H%M).zip"
 export FINAL_ZIP="${ZIP_DIR}/${ZIPNAME}"
 
 [ ! -d "${ZIP_DIR}" ] && mkdir -pv ${ZIP_DIR}
@@ -98,7 +98,7 @@ if [[ "$@" =~ "clean" ]]; then
 fi
 
 # curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendSticker -d sticker="CAADBQADFgADx8M3D8ZwwIWZRWcwAg"  -d chat_id=$CHAT_ID
-curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d text="Beta Build Scheduled for $KERNELNAME Kernel (Treble) " -d chat_id=$CHAT_ID
+curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d text="Beta Build Scheduled for $KERNELNAME Kernel (MIUI) " -d chat_id=$CHAT_ID
 ${MAKE} $DEFCONFIG;
 ${MAKE} ${MODULES};
 START=$(date +"%s");
@@ -169,7 +169,7 @@ curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d text="
 ♔♔♔♔♔♔♔BUILD-DETAILS♔♔♔♔♔♔♔
 🖋️ Author     : vvrRockStar
 🛠️ Make-Type  : $MAKE_TYPE
-🗒️ Buld-Type  : New Year Special
+🗒️ Buld-Type  : MIUI-Staging
 ⌚ Build-Time : $time
 🗒️ Zip-Name   : $ZIPNAME
 "  -d chat_id=$CHAT_ID

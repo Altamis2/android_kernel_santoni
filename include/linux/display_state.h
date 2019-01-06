@@ -1,11 +1,7 @@
 /*
  * include/linux/display_state.h
  *
-<<<<<<< HEAD
  * Copyright (c) 2016-2017 Francisco Franco
-=======
- * Copyright (c) 2016 Francisco Franco
->>>>>>> 29fc29e6b21a... display: add a simple api to query the display state (on/off) at any point in time
  * franciscofranco.1990@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify

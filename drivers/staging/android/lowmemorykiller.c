@@ -42,18 +42,7 @@
 #include <linux/rcupdate.h>
 #include <linux/profile.h>
 #include <linux/notifier.h>
-#include <linux/mutex.h>
-#include <linux/delay.h>
-#include <linux/swap.h>
-#include <linux/fs.h>
-#include <linux/cpuset.h>
-#include <linux/zcache.h>
-
-#ifdef CONFIG_HIGHMEM
-#define _ZONE ZONE_HIGHMEM
-#else
-#define _ZONE ZONE_NORMAL
-#endif
+#include <linux/vmpressure.h>
 
 
 #define CONFIG_CONVERT_ADJ_TO_SCORE_ADJ
@@ -84,33 +73,6 @@ static bool kill_one_more;
 			pr_info(x);			\
 	} while (0)
 
-static unsigned long lowmem_count(struct shrinker *s,
-				  struct shrink_control *sc)
-{
-	if (!enable_lmk)
-		return 0;
-
-	return global_page_state(NR_ACTIVE_ANON) +
-		global_page_state(NR_ACTIVE_FILE) +
-		global_page_state(NR_INACTIVE_ANON) +
-		global_page_state(NR_INACTIVE_FILE);
-}
-
-static int test_task_flag(struct task_struct *p, int flag)
-{
-	struct task_struct *t;
-
-	for_each_thread(p, t) {
-		task_lock(t);
-		if (test_tsk_thread_flag(t, flag)) {
-			task_unlock(t);
-			return 1;
-		}
-		task_unlock(t);
-	}
-
-	return 0;
-}
 
 static bool test_tsk_lmk_waiting(struct task_struct *p)
 {
@@ -243,11 +205,13 @@ again:
 			     other_free * (long)(PAGE_SIZE / 1024));
 		lowmem_deathpending_timeout = jiffies + HZ;
 		rem += selected_tasksize;
-		rcu_read_unlock();
-		/* give the system time to free up the memory */
-		msleep_interruptible(20);
-	} else
-		rcu_read_unlock();
+	}
+
+	if (kill_one_more) {
+		selected = NULL;
+		kill_one_more = false;
+		goto again;
+	}
 
 	lowmem_print(4, "lowmem_scan %lu, %x, return %lu\n",
 		     sc->nr_to_scan, sc->gfp_mask, rem);
@@ -269,7 +233,22 @@ static struct shrinker lowmem_shrinker = {
 static int lmk_vmpressure_notifier(struct notifier_block *nb,
 			unsigned long action, void *data)
 {
-	register_shrinker(&lowmem_shrinker);
+	unsigned long pressure = action;
+
+	if (pressure >= 95) {
+		if (!kill_one_more) {
+			kill_one_more = true;
+			lowmem_print(1, "vmpressure %ld, set kill_one_more true\n",
+				pressure);
+		}
+	} else {
+		if (kill_one_more) {
+			kill_one_more = false;
+			lowmem_print(1, "vmpressure %ld, set kill_one_more false\n",
+				pressure);
+		}
+	}
+
 	return 0;
 }
 

@@ -48,6 +48,7 @@ Module.symvers
 #
 /tags
 /TAGS
+/out/
 /linux
 /vmlinux
 /vmlinux.32
